@@ -41,8 +41,18 @@
     <!--  <el-card class="card">-->
 
     <!--  </el-card>-->
-    <el-card class="card" style="margin-top: 10px">
-      <template #header>维护量统计</template>
+    <el-card class="card statistics" style="margin-top: 10px">
+      <template #header>
+        <div class="clearfix">
+              <span
+              >{{ nowTime.getFullYear() }}年{{
+                  nowTime.getMonth() + 1
+                }}月工作量统计</span
+              >
+        </div>
+
+      </template>
+      <Statistics/>
     </el-card>
 
     <!--维护详细展示框-->
@@ -82,6 +92,7 @@
 </template>
 
 <script setup lang="ts">
+import Statistics from "../../../components/statistics.vue";
 import {getUnFinishWhListApi, listMaintTypeByStatusApi,} from "../../../api/maint";
 import {useRouter} from 'vue-router';
 import {useUserStore} from "../../../stores/user";
@@ -103,6 +114,10 @@ const buildingList = ref();
 //维护详细变量
 const maintDetailVisible = ref(false);
 const maintDetails = ref();
+
+//获取当前时间
+const nowTime = new Date();
+
 
 onMounted(() => {
   getData();
@@ -158,7 +173,7 @@ const getData = () => {
 }
 
 .card {
-  width: 97%;
+  width: 95%;
   margin: 0 auto;
 }
 
@@ -195,5 +210,9 @@ const getData = () => {
   word-break: break-word; /* 如果值过长允许换行 */
   word-wrap: break-word; /* 允许在单词边界换行 */
   white-space: pre-wrap; /* 保留换行符，且内容自动换行 */
+}
+
+.statistics{
+  min-height: 300px;
 }
 </style>

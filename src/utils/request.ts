@@ -5,8 +5,8 @@ import { useUserStore } from "../stores/user"; // 导入用户 store
 import { AnyARecord } from "dns";
 
 const service: AxiosInstance = axios.create({
-  baseURL: "http://localhost:56000", // API 基础地址
-  // baseURL: "http://192.168.106.195:56000", // API 基础地址
+  // baseURL: "http://localhost:56000", // API 基础地址
+  baseURL: "http://192.168.0.16:56000", // API 基础地址
   timeout: 5000, // 超时时间
   withCredentials: true, // 允许携带 cookie
 });

@@ -10,7 +10,7 @@
     <el-drawer
         v-model="menuVisible"
         direction="rtl"
-        size="250px"
+        size="300px"
         @close="onMenuClose"
     >
       <template #header>
@@ -19,7 +19,7 @@
             <div class="user-info-cont">
               <div class="user-info-name">{{ user.name }}</div>
               <div id="info">
-                <span>账号：{{ user.username }}</span>
+                <span>账号: {{ user.username }}</span>
 <!--                <span v-if="user.startYear">{{ user.startYear }}级</span>-->
                 <span>权限: {{ user.permission }}</span>
                 <span>部门: {{ user.organizationName }}</span>
@@ -136,6 +136,7 @@ const logout = async () => {
 
 .user-info-name{
   color: black;
+  font-size: 20px;
 }
 
 ::v-deep .el-drawer__header {
@@ -149,11 +150,12 @@ const logout = async () => {
 
 ::v-deep .el-drawer__close-btn {
   position: relative;
-  top: -15px;
-  right: -5px;
+  top: -10px;
+  font-size: larger;
+  right: 0;
 }
 #info span{
-  font-size: 8px;
+  font-size: 10px;
   margin-right:5px;
 }
 </style>
