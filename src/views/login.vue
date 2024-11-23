@@ -50,8 +50,8 @@ const permiss = usePermissStore();
 const tags = useTagsStore();
 
 const param = reactive<LoginInfo>({
-  username: "admin",
-  password: "123123",
+  username: "",
+  password: "",
 });
 
 const particlesInit = async (engine: any) => {
