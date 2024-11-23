@@ -69,8 +69,8 @@
                 min-width="18%"
                 :label="'Address'"
                 class-name="address-column"
-                @click="searchByAddress"
-              >
+             
+              >  <!--@click="searchByAddress"--> 
                 <template #default="scope">
                   <span
                     >{{ scope.row.buildingName }}{{ scope.row.unit
@@ -275,29 +275,29 @@
 </template>
 
 <script setup lang="ts" name="dashboard">
-import Statistic from "../components/statistics.vue";
-import Chart from "../components/chart.vue";
+import Statistic from "../../../components/statistics.vue";
+import Chart from "../../../components/chart.vue";
 
 import { reactive, onMounted } from "vue";
-import { usePermissStore } from "../stores/permiss";
-import AddModal from "../components/AddModal.vue";
+import { usePermissStore } from "../../../stores/permiss";
+import AddModal from "../../../components/AddModal.vue";
 import { ref } from "vue";
 import * as echarts from "echarts";
 import imgurl from "../assets/img/img.jpg";
 import { ElMessage } from "element-plus";
 
-import { listWorkAmountByMonthApi } from "../api/work-amount";
-import { listUserByStatusAndStateApi } from "../api/user";
-import { getBuildingListApi } from "../api/building";
+import { listWorkAmountByMonthApi } from "../../../api/work-amount";
+import { listUserByStatusAndStateApi } from "../../../api/user";
+import { getBuildingListApi } from "../../../api/building";
 import {
   getUnFinishWhListApi,
   updateMaintStateApi,
   updateMaintRecordApi,
   listMaintTypeByStatusApi,
   reportMaintApi,
-} from "../api/maint";
+} from "../../../api/maint";
 
-import { useUserStore } from "../stores/user";
+import { useUserStore } from "../../../stores/user";
 export interface FormData {
   id: string;
   name: string;

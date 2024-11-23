@@ -1,10 +1,21 @@
 <template>
   <div>
-    <Particles id="tsparticles" :particlesInit="particlesInit" :particlesLoaded="particlesLoaded" :options="options" />
+    <Particles
+      id="tsparticles"
+      :particlesInit="particlesInit"
+      :particlesLoaded="particlesLoaded"
+      :options="options"
+    />
     <div class="login-wrap">
       <div class="ms-login">
         <div class="ms-title">济南大学MSU</div>
-        <el-form :model="param" :rules="rules" ref="login" label-width="0px" class="ms-content">
+        <el-form
+          :model="param"
+          :rules="rules"
+          ref="login"
+          label-width="0px"
+          class="ms-content"
+        >
           <el-form-item prop="username">
             <el-input v-model="param.username" placeholder="username">
               <template #prepend>
@@ -13,7 +24,12 @@
             </el-input>
           </el-form-item>
           <el-form-item prop="password">
-            <el-input type="password" placeholder="password" v-model="param.password" @keyup.enter="submitForm(login)">
+            <el-input
+              type="password"
+              placeholder="password"
+              v-model="param.password"
+              @keyup.enter="submitForm(login)"
+            >
               <template #prepend>
                 <el-button :icon="Lock"></el-button>
               </template>
@@ -31,15 +47,15 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted } from "vue";
-import { useTagsStore } from "../stores/tags";
-import { useUserStore } from "../stores/user";
-import { usePermissStore } from "../stores/permiss";
+import { useTagsStore } from "../../stores/tags";
+import { useUserStore } from "../../stores/user";
+import { usePermissStore } from "../../stores/permiss";
 import { useRouter, useRoute } from "vue-router";
 import { ElMessage } from "element-plus";
 import type { FormInstance, FormRules } from "element-plus";
 import { Lock, User } from "@element-plus/icons-vue";
-import { LoginInfo } from "../types/login";
-import { loginApi } from "../api";
+import { LoginInfo } from "../../types/login";
+import { loginApi } from "../../api";
 import { loadFull } from "tsparticles";
 import MD5 from "crypto-js/md5"; // 引入 MD5 库
 
@@ -204,7 +220,7 @@ tags.clearTags();
 }
 
 .ms-title {
-  user-select: none;
+  user-select:none;
   font-size: 24px;
   color: #333;
   text-align: center;
@@ -239,21 +255,15 @@ tags.clearTags();
 }
 
 .button {
-  background-color: #696969;
-  /* 默认颜色 */
-  color: white;
-  /* 按钮文字颜色 */
-  border: none;
-  /* 移除边框 */
-  padding: 10px 20px;
-  /* 按钮内边距 */
-  cursor: pointer;
-  /* 鼠标悬停时的手型光标 */
+  background-color: #696969; /* 默认颜色 */
+  color: white; /* 按钮文字颜色 */
+  border: none; /* 移除边框 */
+  padding: 10px 20px; /* 按钮内边距 */
+  cursor: pointer; /* 鼠标悬停时的手型光标 */
 }
 
 .button:active {
-  background-color: #505050;
-  /* 按钮被点击时颜色变深 */
+  background-color: #505050; /* 按钮被点击时颜色变深 */
 }
 
 
@@ -267,23 +277,5 @@ body {
 canvas {
   display: block;
   vertical-align: bottom;
-}
-
-@media (max-width: 768px) {
-  .ms-title {
-    user-select: none;
-    font-size: 20px;
-    color: #333;
-    text-align: center;
-    margin-bottom: 30px;
-  }
-
-  .ms-login {
-    width: 270px;
-    padding: 25px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-  }
 }
 </style>

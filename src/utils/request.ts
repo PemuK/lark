@@ -2,9 +2,11 @@ import axios, { AxiosInstance, AxiosError, AxiosResponse, AxiosRequestConfig } f
 import { ElMessage } from "element-plus";
 import router from "../router"; // 确保导入的是已创建的 router 实例
 import { useUserStore } from "../stores/user"; // 导入用户 store
+import { AnyARecord } from "dns";
 
 const service: AxiosInstance = axios.create({
   baseURL: "http://localhost:56000", // API 基础地址
+  // baseURL: "http://192.168.106.195:56000", // API 基础地址
   timeout: 5000, // 超时时间
   withCredentials: true, // 允许携带 cookie
 });
@@ -53,7 +55,7 @@ service.interceptors.response.use(
         userStore.outLogin(); // 用于处理登出逻辑
 
         // 跳转到登录页面并传递 `out=true` 参数
-        router.push({ path: '/login', query: { out: 'true' } }).catch((error) => {
+        router.push({ path: '/login', query: { out: 'true' } }).catch((error:any) => {
           console.error("跳转到登录页面失败: ", error);
         }).finally(() => {
           isSessionExpired = false; // 确保状态重置

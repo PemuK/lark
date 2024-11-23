@@ -40,20 +40,9 @@
 <script lang="ts" setup>
 import { ref, onMounted, watch } from "vue";
 import type { TabsPaneContext } from "element-plus";
-import MaintType from "../components/MaintType.vue";
-import Organization from "../components/Organization.vue";
-import Building from "../components/Building.vue";
-import { listMaintTypeByStatusApi } from "../api/maint";
-import { listUserByStatusAndStateApi } from "../api/user";
-
-// Tab 3: 地址/学院信息 data
-
-// Tab 4: DNS data
-const dnsData = ref([
-  { domain: "example.com", ip: "192.168.1.1", status: "正常" },
-  { domain: "test.com", ip: "192.168.1.2", status: "异常" },
-  { domain: "mywebsite.com", ip: "192.168.1.3", status: "正常" },
-]);
+import MaintType from "../../../components/MaintType.vue";
+import Organization from "../../../components/Organization.vue";
+import Building from "../../../components/Building.vue";
 
 const activeName = ref("first");
 watch(activeName, (newValue, oldValue) => {

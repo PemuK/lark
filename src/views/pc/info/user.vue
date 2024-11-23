@@ -76,9 +76,9 @@
 <script setup lang="ts" name="user">
 import { reactive, ref } from "vue";
 import VueCropper from "vue-cropperjs";
-import avatar from "../assets/img/img.jpg";
-import { useUserStore } from "../stores/user";
-import { changePasswordApi } from "../api";
+import avatar from "../../../assets/img/img.jpg";
+import { useUserStore } from "../../../stores/user";
+import { changePasswordApi } from "../../../api";
 import { useRouter } from "vue-router";
 import MD5 from "crypto-js/md5"; // 引入 MD5 库
 import { ElMessage } from "element-plus"; // 引入 Element Plus 的消息提示

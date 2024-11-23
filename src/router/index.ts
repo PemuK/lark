@@ -1,9 +1,40 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 import { usePermissStore } from '../stores/permiss';
+import { deviceDetection } from '../utils/device-detection';
 import { useUserStore } from '../stores/user';
-import Home from '../views/home.vue';
 
-const routes: RouteRecordRaw[] = [
+const mediaRoutes: RouteRecordRaw[] = [
+    {
+        path: '/',
+        redirect: '/dashboard',
+    }, 
+    {
+        path: '/',
+        name: 'Home',
+        component: ()=>import('../views/meida/home.vue'),
+        children:[
+            {
+                path: '/dashboard',
+                name: 'dashboard',
+                meta: {
+                    title: '系统首页',
+                    permiss: '1',
+                },
+                component: () => import(/* webpackChunkName: "dashboard" */ '../views/meida/user/dashboard.vue'),
+            }
+        ]
+    },
+    {
+        path: '/login',
+        name: 'Login',
+        meta: {
+            title: '登录',
+        },
+        component: () => import(/* webpackChunkName: "login" */ '../views/pc/login.vue'),
+    },
+]
+
+const pcRoutes: RouteRecordRaw[] = [
     {
         path: '/',
         redirect: '/dashboard',
@@ -11,7 +42,7 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/',
         name: 'Home',
-        component: Home,
+        component: ()=>import('../views/pc/home.vue'),
         children: [
             {
                 path: '/dashboard',
@@ -20,7 +51,7 @@ const routes: RouteRecordRaw[] = [
                     title: '系统首页',
                     permiss: '1',
                 },
-                component: () => import(/* webpackChunkName: "dashboard" */ '../views/dashboard.vue'),
+                component: () => import(/* webpackChunkName: "dashboard" */ '../views/pc/user/dashboard.vue'),
             },
             {
                 path: '/maint-statistics',
@@ -29,7 +60,7 @@ const routes: RouteRecordRaw[] = [
                     title: '维护量统计',
                     permiss: '2',
                 },
-                component: () => import(/* webpackChunkName: "form" */ '../views/maint-statistics.vue'),
+                component: () => import(/* webpackChunkName: "form" */ '../views/pc/maint/maint-statistics.vue'),
             },
             {
                 path: '/user',
@@ -37,7 +68,7 @@ const routes: RouteRecordRaw[] = [
                 meta: {
                     title: '个人中心',
                 },
-                component: () => import(/* webpackChunkName: "user" */ '../views/user.vue'),
+                component: () => import(/* webpackChunkName: "user" */ '../views/pc/info/user.vue'),
             },
             {
                 path: '/user-controller',
@@ -46,7 +77,7 @@ const routes: RouteRecordRaw[] = [
                     title: "用户管理",
                     permiss: '5',
                 },
-                component: () => import('../views/user-controller.vue'),
+                component: () => import('../views/pc/user/user-controller.vue'),
             },
             {
                 path: '/info-manage',
@@ -55,7 +86,7 @@ const routes: RouteRecordRaw[] = [
                     title: "信息管理",
                     permiss: '6',
                 },
-                component: () => import('../views/info-manage.vue'),
+                component: () => import('../views/pc/info/info-manage.vue'),
             },
             {
                 path: '/table-finished',
@@ -64,7 +95,7 @@ const routes: RouteRecordRaw[] = [
                     title: '已完成维护',
                     permiss: '2',
                 },
-                component: () => import(/* webpackChunkName: "table" */ '../views/table-finished.vue'),
+                component: () => import(/* webpackChunkName: "table" */ '../views/pc/maint/table-finished.vue'),
             },
             // {
             //     path: '/charts',
@@ -73,7 +104,7 @@ const routes: RouteRecordRaw[] = [
             //         title: '图表',
             //         permiss: '11',
             //     },
-            //     component: () => import(/* webpackChunkName: "charts" */ '../views/charts.vue'),
+            //     component: () => import(/* webpackChunkName: "charts" */ '../views/pc/charts.vue'),
             // },
             // {
             //     path: '/form',
@@ -82,7 +113,7 @@ const routes: RouteRecordRaw[] = [
             //         title: '表单',
             //         permiss: '5',
             //     },
-            //     component: () => import(/* webpackChunkName: "form" */ '../views/form.vue'),
+            //     component: () => import(/* webpackChunkName: "form" */ '../views/pc/form.vue'),
             // },
             // {
             //     path: '/maint-type',
@@ -91,7 +122,7 @@ const routes: RouteRecordRaw[] = [
             //         title: '维护类型',
             //         permiss: '5',
             //     },
-            //     component: () => import(/* webpackChunkName: "form" */ '../views/maint-type.vue'),
+            //     component: () => import(/* webpackChunkName: "form" */ '../views/pc/maint/maint-type.vue'),
             // },
             // {
             //     path: '/maint-information',
@@ -100,7 +131,7 @@ const routes: RouteRecordRaw[] = [
             //         title: '维护信息管理',
             //         permiss: '3',
             //     },
-            //     component: () => import(/* webpackChunkName: "form" */ '../views/maint-information.vue'),
+            //     component: () => import(/* webpackChunkName: "form" */ '../views/pc/info/maint-information.vue'),
             // },
             // {
             //     path: '/tabs',
@@ -109,7 +140,7 @@ const routes: RouteRecordRaw[] = [
             //         title: 'tab标签',
             //         permiss: '3',
             //     },
-            //     component: () => import(/* webpackChunkName: "tabs" */ '../views/tabs.vue'),
+            //     component: () => import(/* webpackChunkName: "tabs" */ '../views/pc/tabs.vue'),
             // },
             // {
             //     path: '/donate',
@@ -118,7 +149,7 @@ const routes: RouteRecordRaw[] = [
             //         title: '鼓励作者',
             //         permiss: '14',
             //     },
-            //     component: () => import(/* webpackChunkName: "donate" */ '../views/donate.vue'),
+            //     component: () => import(/* webpackChunkName: "donate" */ '../views/pc/donate.vue'),
             // },
             // {
             //     path: '/permission',
@@ -127,7 +158,7 @@ const routes: RouteRecordRaw[] = [
             //         title: '权限管理',
             //         permiss: '13',
             //     },
-            //     component: () => import(/* webpackChunkName: "permission" */ '../views/permission.vue'),
+            //     component: () => import(/* webpackChunkName: "permission" */ '../views/pc/permission.vue'),
             // },
             // {
             //     path: '/upload',
@@ -136,7 +167,7 @@ const routes: RouteRecordRaw[] = [
             //         title: '上传插件',
             //         permiss: '6',
             //     },
-            //     component: () => import(/* webpackChunkName: "upload" */ '../views/upload.vue'),
+            //     component: () => import(/* webpackChunkName: "upload" */ '../views/pc/upload.vue'),
             // },
             // {
             //     path: '/icon',
@@ -145,7 +176,7 @@ const routes: RouteRecordRaw[] = [
             //         title: '自定义图标',
             //         permiss: '10',
             //     },
-            //     component: () => import(/* webpackChunkName: "icon" */ '../views/icon.vue'),
+            //     component: () => import(/* webpackChunkName: "icon" */ '../views/pc/icon.vue'),
             // },
             // {
             //     path: '/editor',
@@ -154,7 +185,7 @@ const routes: RouteRecordRaw[] = [
             //         title: '富文本编辑器',
             //         permiss: '8',
             //     },
-            //     component: () => import(/* webpackChunkName: "editor" */ '../views/editor.vue'),
+            //     component: () => import(/* webpackChunkName: "editor" */ '../views/pc/editor.vue'),
             // },
             // {
             //     path: '/markdown',
@@ -163,7 +194,7 @@ const routes: RouteRecordRaw[] = [
             //         title: 'markdown编辑器',
             //         permiss: '9',
             //     },
-            //     component: () => import(/* webpackChunkName: "markdown" */ '../views/markdown.vue'),
+            //     component: () => import(/* webpackChunkName: "markdown" */ '../views/pc/markdown.vue'),
             // },
             // {
             //     path: '/export',
@@ -172,7 +203,7 @@ const routes: RouteRecordRaw[] = [
             //         title: '导出Excel',
             //         permiss: '2',
             //     },
-            //     component: () => import(/* webpackChunkName: "export" */ '../views/export.vue'),
+            //     component: () => import(/* webpackChunkName: "export" */ '../views/pc/export.vue'),
             // },
             // {
             //     path: '/import',
@@ -181,7 +212,7 @@ const routes: RouteRecordRaw[] = [
             //         title: '导入Excel',
             //         permiss: '2',
             //     },
-            //     component: () => import(/* webpackChunkName: "import" */ '../views/import.vue'),
+            //     component: () => import(/* webpackChunkName: "import" */ '../views/pc/import.vue'),
             // },
 
         ],
@@ -192,7 +223,7 @@ const routes: RouteRecordRaw[] = [
         meta: {
             title: '登录',
         },
-        component: () => import(/* webpackChunkName: "login" */ '../views/login.vue'),
+        component: () => import(/* webpackChunkName: "login" */ '../views/pc/login.vue'),
     },
     {
         path: '/403',
@@ -200,9 +231,11 @@ const routes: RouteRecordRaw[] = [
         meta: {
             title: '没有权限',
         },
-        component: () => import(/* webpackChunkName: "403" */ '../views/403.vue'),
+        component: () => import(/* webpackChunkName: "403" */ '../views/pc/error/403.vue'),
     },
 ];
+
+const routes = deviceDetection.isMobile() ? mediaRoutes : pcRoutes;
 
 const router = createRouter({
     history: createWebHashHistory(),

@@ -1,14 +1,7 @@
 <template>
   <div class="sidebar">
-    <el-menu
-      class="sidebar-el-menu"
-      :default-active="onRoutes"
-      :collapse="sidebar.collapse"
-      background-color="#324157"
-      text-color="#bfcbd9"
-      active-text-color="#20a0ff"
-      unique-opened
-    >
+    <el-menu class="sidebar-el-menu" :default-active="onRoutes" :collapse="sidebar.collapse" background-color="#324157"
+      text-color="#bfcbd9" active-text-color="#20a0ff" unique-opened>
       <template v-for="item in items" :key="item.index">
         <template v-if="item.subs">
           <el-sub-menu :index="item.index" v-permiss="item.permiss">
@@ -19,37 +12,21 @@
               <span>{{ item.title }}</span>
             </template>
             <template v-for="subItem in item.subs" :key="subItem.index">
-              <el-sub-menu
-                v-if="subItem.subs"
-                :index="subItem.index"
-                v-permiss="subItem.permiss"
-              >
+              <el-sub-menu v-if="subItem.subs" :index="subItem.index" v-permiss="subItem.permiss">
                 <template #title>{{ subItem.title }}</template>
-                <el-menu-item
-                  v-for="(threeItem, i) in subItem.subs"
-                  :key="i"
-                  :index="threeItem.index"
-                >
+                <el-menu-item v-for="(threeItem, i) in subItem.subs" :key="i" :index="threeItem.index">
                   {{ threeItem.title }}
                 </el-menu-item>
               </el-sub-menu>
-              <el-menu-item
-                v-else
-                :index="subItem.index"
-                v-permiss="subItem.permiss"
-                @click="handleMenuItemClick(subItem.index)"
-              >
+              <el-menu-item v-else :index="subItem.index" v-permiss="subItem.permiss"
+                @click="handleMenuItemClick(subItem.index)">
                 {{ subItem.title }}
               </el-menu-item>
             </template>
           </el-sub-menu>
         </template>
         <template v-else>
-          <el-menu-item
-            :index="item.index"
-            v-permiss="item.permiss"
-            @click="handleMenuItemClick(item.index)"
-          >
+          <el-menu-item :index="item.index" v-permiss="item.permiss" @click="handleMenuItemClick(item.index)">
             <el-icon>
               <component :is="item.icon"></component>
             </el-icon>
@@ -63,12 +40,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, reactive, onMounted, watch } from "vue";
+import { computed, ref } from "vue";
 import { useSidebarStore } from "../stores/sidebar";
 import AddModal from "./AddModal.vue";
 import { useRoute, useRouter } from "vue-router";
 
-const items:any[] = [
+const items: any[] = [
   {
     icon: "Odometer",
     index: "/dashboard", // 路由路径
@@ -160,13 +137,16 @@ const gzlList = ref([]);
   bottom: 0;
   overflow-y: scroll;
 }
+
 .sidebar::-webkit-scrollbar {
   width: 0;
 }
+
 .sidebar-el-menu:not(.el-menu--collapse) {
   width: 250px;
 }
-.sidebar > ul {
+
+.sidebar>ul {
   height: 100%;
 }
 </style>
@@ -178,8 +158,9 @@ const gzlList = ref([]);
 }
 
 /* 选中时的样式 */
-input[type="radio"]:checked + .icon {
-  color: #000000; /* 黑色 */
+input[type="radio"]:checked+.icon {
+  color: #000000;
+  /* 黑色 */
 }
 
 .radio-group {
@@ -187,14 +168,17 @@ input[type="radio"]:checked + .icon {
   align-items: left;
   font-size: 0.75rem;
 }
+
 .radio-group label.description {
   margin-left: 12px;
   margin-right: 10px;
 }
+
 .radio-options {
   display: flex;
   width: 100px;
-  gap: 10px; /* 增加选项之间的间距 */
+  gap: 10px;
+  /* 增加选项之间的间距 */
 }
 
 .radio-options input[type="radio"] {
@@ -206,20 +190,26 @@ input[type="radio"]:checked + .icon {
 .radio-options label {
   display: flex;
   align-items: center;
-  gap: 5px; /* 增加标签和单选框之间的间距 */
+  gap: 5px;
+  /* 增加标签和单选框之间的间距 */
 }
+
 .modify-input {
   width: 100%;
 }
+
 #add {
   display: flex;
   justify-content: center;
-  border-right: 1px solid rgb(65, 65, 65, 0.2); /* Add vertical line */
+  border-right: 1px solid rgb(65, 65, 65, 0.2);
+  /* Add vertical line */
   height: 510px;
 }
+
 body {
   font-family: Arial, sans-serif;
 }
+
 .form-container {
   display: flex;
   flex-direction: column;
@@ -232,7 +222,8 @@ body {
   align-items: center;
   margin-bottom: 15px;
   margin-left: -55px;
-  flex-wrap: wrap; /* Ensure labels and inputs wrap on smaller screens */
+  flex-wrap: wrap;
+  /* Ensure labels and inputs wrap on smaller screens */
 }
 
 .form-group label {
@@ -250,19 +241,24 @@ body {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  min-width: 0; /* Prevent overflow */
+  min-width: 0;
+  /* Prevent overflow */
 }
 
 .form-group textarea {
   resize: vertical;
-  height: 60px; /* Adjust height as needed */
+  height: 60px;
+  /* Adjust height as needed */
 }
 
 .button-container {
   display: flex;
-  justify-content: flex-end; /* Align buttons to the right */
-  gap: 10px; /* Space between buttons */
-  margin-top: 30px; /* Space above the button container */
+  justify-content: flex-end;
+  /* Align buttons to the right */
+  gap: 10px;
+  /* Space between buttons */
+  margin-top: 30px;
+  /* Space above the button container */
 }
 
 .button-container button {
@@ -282,7 +278,8 @@ body {
 /* 原生 input 元素的样式 */
 form {
   display: flex;
-  flex-direction: column; /* 竖直排列子元素 */
+  flex-direction: column;
+  /* 竖直排列子元素 */
 }
 
 select {
@@ -291,28 +288,39 @@ select {
   border: 2px solid rgb(226, 224, 224);
   border-radius: 5px;
   text-decoration: none;
-  box-shadow: none; /* 去除阴影 */
-  background: none; /* 去除背景 */
-  outline: none; /* 去除焦点时的轮廓 */
-  padding: 2px; /* 内边距 */
-  font-size: 14px; /* 自定义字体大小 */
-  color: #000000; /* 自定义字体颜色 */
-  transition: all 0.3s ease; /* 添加过渡效果 */
+  box-shadow: none;
+  /* 去除阴影 */
+  background: none;
+  /* 去除背景 */
+  outline: none;
+  /* 去除焦点时的轮廓 */
+  padding: 2px;
+  /* 内边距 */
+  font-size: 14px;
+  /* 自定义字体大小 */
+  color: #000000;
+  /* 自定义字体颜色 */
+  transition: all 0.3s ease;
+  /* 添加过渡效果 */
 }
 
 option {
-  transition: all 0.3s ease; /* 添加过渡效果 */
+  transition: all 0.3s ease;
+  /* 添加过渡效果 */
 }
 
 /* 鼠标悬停时的效果 */
 select:hover {
-  border: 2px solid #8e8e8e; /* 自定义悬停边框颜色 */
+  border: 2px solid #8e8e8e;
+  /* 自定义悬停边框颜色 */
 }
 
 /* 聚焦时的效果 */
 select:focus {
-  border: 2px solid #525252; /* 自定义焦点边框颜色 */
-  outline: none; /* 去除默认焦点轮廓 */
+  border: 2px solid #525252;
+  /* 自定义焦点边框颜色 */
+  outline: none;
+  /* 去除默认焦点轮廓 */
 }
 
 input {
@@ -321,20 +329,28 @@ input {
   border: 2px solid rgb(226, 224, 224);
   border-radius: 5px;
   text-decoration: none;
-  box-shadow: none; /* 去除阴影 */
-  background: none; /* 去除背景 */
-  outline: none; /* 去除焦点时的轮廓 */
-  padding: 2px; /* 内边距 */
-  font-size: 14px; /* 自定义字体大小 */
-  color: #000000; /* 自定义字体颜色 */
+  box-shadow: none;
+  /* 去除阴影 */
+  background: none;
+  /* 去除背景 */
+  outline: none;
+  /* 去除焦点时的轮廓 */
+  padding: 2px;
+  /* 内边距 */
+  font-size: 14px;
+  /* 自定义字体大小 */
+  color: #000000;
+  /* 自定义字体颜色 */
 }
 
 input:focus {
-  border: 2px solid #525252; /* 自定义焦点边框颜色 */
+  border: 2px solid #525252;
+  /* 自定义焦点边框颜色 */
 }
 
 input:hover {
-  border: 2px solid #8e8e8e; /* 自定义悬停边框颜色 */
+  border: 2px solid #8e8e8e;
+  /* 自定义悬停边框颜色 */
 }
 
 div {
@@ -452,33 +468,51 @@ div {
 }
 
 .popover-content {
-  width: 100%; /* Ensure the popover takes full width */
-  text-align: center; /* Center text */
-  box-sizing: border-box; /* Include padding and border in width calculation */
+  width: 100%;
+  /* Ensure the popover takes full width */
+  text-align: center;
+  /* Center text */
+  box-sizing: border-box;
+  /* Include padding and border in width calculation */
 }
 
 .action-list {
-  list-style: none; /* Remove bullet points */
-  padding: 0; /* Remove default padding */
-  margin: 0; /* Remove default margin */
-  width: 100%; /* Ensure list takes full width */
+  list-style: none;
+  /* Remove bullet points */
+  padding: 0;
+  /* Remove default padding */
+  margin: 0;
+  /* Remove default margin */
+  width: 100%;
+  /* Ensure list takes full width */
 }
 
 .action-list li {
-  margin-bottom: 10px; /* Space between items */
+  margin-bottom: 10px;
+  /* Space between items */
 }
 
 .action-button {
-  display: block; /* Make buttons take full width */
-  width: 100%; /* Full width */
-  border: none; /* Remove default border */
-  color: black; /* Button text color */
-  background-color: transparent; /* Transparent background */
-  font-size: 14px; /* Font size */
-  text-align: center; /* Center text */
-  cursor: pointer; /* Pointer cursor on hover */
-  transition: background-color 0.3s; /* Smooth background color transition */
-  box-sizing: border-box; /* Include padding and border in width calculation */
+  display: block;
+  /* Make buttons take full width */
+  width: 100%;
+  /* Full width */
+  border: none;
+  /* Remove default border */
+  color: black;
+  /* Button text color */
+  background-color: transparent;
+  /* Transparent background */
+  font-size: 14px;
+  /* Font size */
+  text-align: center;
+  /* Center text */
+  cursor: pointer;
+  /* Pointer cursor on hover */
+  transition: background-color 0.3s;
+  /* Smooth background color transition */
+  box-sizing: border-box;
+  /* Include padding and border in width calculation */
 }
 
 .el-dialog {
@@ -503,7 +537,8 @@ div {
 }
 
 .action-button:hover {
-  color: #0056b3; /* Darker background on hover */
+  color: #0056b3;
+  /* Darker background on hover */
 }
 
 #select {

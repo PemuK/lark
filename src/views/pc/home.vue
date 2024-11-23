@@ -15,11 +15,11 @@
 	</div>
 </template>
 <script setup lang="ts">
-import { useSidebarStore } from '../stores/sidebar';
-import { useTagsStore } from '../stores/tags';
-import vHeader from '../components/Header.vue';
-import vSidebar from '../components/Sidebar.vue';
-import vTags from '../components/TagBar.vue';
+import { useSidebarStore } from '../../stores/sidebar';
+import { useTagsStore } from '../../stores/tags';
+import vHeader from '../../components/Header.vue';
+import vSidebar from '../../components/Sidebar.vue';
+import vTags from '../../components/TagBar.vue';
 
 const sidebar = useSidebarStore();
 const tags = useTagsStore();

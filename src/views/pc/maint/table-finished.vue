@@ -196,11 +196,11 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted, watch } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
-import { Delete, Edit, Search, Plus } from "@element-plus/icons-vue";
-import { useSidebarStore } from "../stores/sidebar";
+import { Delete, Edit, Search } from "@element-plus/icons-vue";
+import { useSidebarStore } from "../../../stores/sidebar";
 
-import { listUserByStatusAndStateApi } from "../api/user";
-import { getBuildingListApi } from "../api/building";
+import { listUserByStatusAndStateApi } from "../../../api/user";
+import { getBuildingListApi } from "../../../api/building";
 import {
   getFinishWhListApi,
   listMaintTypeByStatusApi,
@@ -211,7 +211,7 @@ import {
   listByPhoneNumberApi,
   listByMaintTypeApi,
   listByDescriptionApi,
-} from "../api/maint";
+} from "../../../api/maint";
 
 const tableData = ref<any[]>([]);
 const pageTotal = ref(0);

@@ -180,14 +180,14 @@
 <script setup lang="ts">
 import { ref, onMounted, reactive } from "vue";
 
-import { getOrganizationByStatusApi } from "../api/organization";
+import { getOrganizationByStatusApi } from "../../../api/organization";
 import {
   getAllUserApi,
   updateUserInfoApi,
   updateUserStateByIdApi,
   addUserApi,
   listUserByNameApi,
-} from "../api/user";
+} from "../../../api/user";
 
 import { Search } from "@element-plus/icons-vue";
 
