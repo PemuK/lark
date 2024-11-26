@@ -1,7 +1,7 @@
 <template>
   <Transition name="run" appear>
     <div id="page" v-if="!change">
-      <el-card class="card" style="margin-top: 20px;height: 230px; margin-bottom: 5px">
+      <el-card class="card" style="margin-top: 20px;height: 270px;  margin-bottom: 5px">
         <template #header>
           <div style="display: flex; justify-content: space-between; align-items: center;">
             <div>
@@ -14,7 +14,7 @@
           </div>
         </template>
 
-        <MaintTable/>
+        <MaintTable  style="width: 100%;" />
       </el-card>
 
       <el-card class="card work-amount">

@@ -16,6 +16,7 @@
         :model="form"
         label-width="auto"
         class="demo-dynamic"
+        @submit.native.prevent="submitForm"
     >
       <div class="form-container">
         <div class="form-group">
@@ -43,7 +44,7 @@
               class="input"
               v-model="form.building"
               placeholder="选择所在楼"
-              style="height: 30px"
+              style="height: 35px"
           >
             <option value="" disabled selected>选择所在楼</option>
             <option
@@ -98,8 +99,9 @@
           ></textarea>
         </div>
         <div class="button-container">
-          <button type="submit">提交</button>
+
           <button type="reset" @click="resetForm()">清空</button>
+          <button type="submit">提交</button>
         </div>
       </div>
     </el-form>
@@ -158,7 +160,7 @@
         :data="associationList"
         v-loading="tableLoading"
         @row-click="clickData"
-        style="width: 100%; overflow-y: auto;height: 200px;"
+        style="width: 100%; overflow-y: auto;height: 200px; font-size: 13px"
     >
       <el-table-column width="70">
         <template #default="scope">
@@ -167,14 +169,14 @@
       </el-table-column>
       <el-table-column>
         <template #default="scope">
-                <span style="font-weight: bold"
+                <span
                 >{{ scope.row.buildingName }}{{
                     scope.row.unit
                   }}{{ scope.row.room }}</span
                 >
         </template>
       </el-table-column>
-      <el-table-column width="200">
+      <el-table-column width="100" show-overflow-tooltip="true">
         <template #default="scope">
           <span>{{ scope.row.maintDescription }}</span>
         </template>
@@ -189,9 +191,16 @@
 </template>
 
 <script setup lang="ts">
-import {defineEmits, onMounted, reactive, ref, watch} from "vue";
+import {defineEmits, onMounted, ref, watch} from "vue";
 import {getBuildingListApi} from "../../../../api/building";
-import {listMaintByClientNameApi, listMaintByLocationApi, listMaintByPhoneNumberApi} from "../../../../api/maint";
+import {
+  addMaintRecordApi,
+  listMaintByClientNameApi,
+  listMaintByLocationApi,
+  listMaintByPhoneNumberApi
+} from "../../../../api/maint";
+import {ElMessage} from "element-plus";
+import {useUserStore} from "../../../../stores/user";
 
 onMounted(() => {
   getData();
@@ -202,6 +211,7 @@ const emit = defineEmits(["change"]);
 const associationList = ref();
 const tableLoading = ref(false);
 const buildings = ref();
+const user=useUserStore();
 
 const option = ref("1")
 const form = ref<any>({
@@ -261,7 +271,7 @@ watch(
 
 const newAddress = (building: any, unit: any, room: any) => {
   tableLoading.value = false;
-  if (building === 0) return;
+  if (!building) return;
   tableLoading.value = true;
   listMaintByLocationApi(building, unit, room, 1).then((res) => {
     if (res.data.code === 200) {
@@ -297,11 +307,74 @@ const newPhone = (phone: string) => {
 
 const clickData = (row: any) => {
   // form.clientId = row.clientId;
-  form.name = row.clientName;
-  form.phone = row.phoneNumber;
-  form.building = row.buildingId;
-  form.unit = row.unit;
-  form.room = row.room;
+  form.value.name = row.clientName;
+  form.value.phone = row.phoneNumber;
+  form.value.building = row.buildingId;
+  form.value.unit = row.unit;
+  form.value.room = row.room;
+};
+
+
+const submitForm = (): Promise<void> => {
+  // 表单验证
+  const isValid = validateForm();
+
+  if (isValid) {
+    addMaintRecordApi({
+      clientName: form.value.name,
+      phoneNumber: form.value.phone,
+      unit: form.value.unit,
+      room: form.value.room,
+      buildingId: form.value.building, // 替换为实际的建筑物 ID 或根据选择的楼名获取
+      adderId: user.id, // 替换为实际的添加人员 ID
+      maintDescription: form.value.issue,
+      locationDescription: form.value.location,
+    }).then(res => {
+      if (res.data.code == 200) {
+        resetForm();
+        getData();
+        emit("change", true);
+        // 显示成功消息
+        ElMessage.success("提交成功");
+      }
+    })
+  } else {
+    ElMessage.error("内容不合法，请检查并修正");
+  }
+};
+
+function validateForm(): boolean {
+  if (!form.value.name || form.value.name.length === 0) {
+    return false;
+  }
+
+  if (!form.value.phone || !/^\d{11}$/.test(form.value.phone)) {
+    return false;
+  }
+
+  if (!form.value.building) {
+    return false;
+  }
+
+  if (!form.value.room || form.value.room.length === 0) {
+    return false;
+  }
+
+  if (!form.value.issue || form.value.issue.length === 0) {
+    return false;
+  }
+
+  return true;
+}
+
+const resetForm = () => {
+  form.value.name = "";
+  form.value.phone = "";
+  form.value.building = "";
+  form.value.unit = "";
+  form.value.room = "";
+  form.value.issue = "";
+  form.value.location = "";
 };
 </script>
 <style scoped>
@@ -561,4 +634,7 @@ div {
   margin-bottom: 10px; /* Space between items */
 }
 
+::v-deep .el-card__body {
+  padding: 12px;
+}
 </style>

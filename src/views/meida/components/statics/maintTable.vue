@@ -3,7 +3,7 @@
       @row-click="handleRowClick"
       :show-header="false"
       :data="unMaintList"
-      style="width: 100%;">
+      style="width: 100%;  height: 198px; overflow-y: auto;">
     <template #empty>
       <p>本月还没有维护</p>
     </template>
@@ -266,7 +266,6 @@ const dialogClose = () => {
 }
 
 
-
 const saveReport = () => {
   if (!report.value.persons.length || !report.value.maintType || !report.value.note.trim()) {
     ElMessage.warning("填报的信息不完整");
@@ -404,7 +403,8 @@ select:focus {
   border: 2px solid #525252; /* 自定义焦点边框颜色 */
   outline: none; /* 去除默认焦点轮廓 */
 }
-::v-deep .el-table__inner-wrapper{
+
+::v-deep .el-table__inner-wrapper {
   min-height: 150px;
 }
 </style>
