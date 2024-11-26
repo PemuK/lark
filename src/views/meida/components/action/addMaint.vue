@@ -107,6 +107,7 @@
     </el-form>
   </el-card>
   <el-card class="card" style="margin-top: 5px;">
+
     <template #header>
       <div style="display: flex; justify-content: space-between; align-items: center;">
         <div>
@@ -162,6 +163,9 @@
         @row-click="clickData"
         style="width: 100%; overflow-y: auto;height: 200px; font-size: 13px"
     >
+      <template #empty>
+        <p>未输入相关参数，无联想维护</p>
+      </template>
       <el-table-column width="70">
         <template #default="scope">
           <span>{{ scope.row.clientName }}</span>
@@ -211,7 +215,7 @@ const emit = defineEmits(["change"]);
 const associationList = ref();
 const tableLoading = ref(false);
 const buildings = ref();
-const user=useUserStore();
+const user = useUserStore();
 
 const option = ref("1")
 const form = ref<any>({

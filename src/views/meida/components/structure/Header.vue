@@ -75,8 +75,8 @@ const navigateTo = (path: string) => {
 const logout = async () => {
   // 调用后端API进行退出登录操作
   localStorage.removeItem("ms_username");
-  user.outLogin();
   router.push("/login");
+  user.outLogin();
   logoutApi().then((res) => {
     ElMessage.success("登出成功");
   });
@@ -84,9 +84,10 @@ const logout = async () => {
 </script>
 
 <style scoped>
-#zhanwei{
-  height:30px;
+#zhanwei {
+  height: 30px;
 }
+
 .mobile-header {
   display: flex;
   justify-content: space-between;
