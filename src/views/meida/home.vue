@@ -21,5 +21,6 @@ import Header from './components/structure/Header.vue';
   display: flex; /* 使用flex布局 */
   flex-direction: column; /* 子元素垂直排列 */
   background-color: #f6f6f6; /* 设置背景色为灰色 */
+  overflow-y: auto;
 }
 </style>

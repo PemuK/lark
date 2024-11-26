@@ -2,7 +2,7 @@
   <div class="mobile-header">
     <div class="header-title">{{ title }}</div>
     <div class="header-menu" @click="toggleMenu">
-      <el-icon :size="20">
+      <el-icon :size="20" color="white">
         <Menu/>
       </el-icon>
     </div>
@@ -20,7 +20,7 @@
               <div class="user-info-name">{{ user.name }}</div>
               <div id="info">
                 <span>账号: {{ user.username }}</span>
-<!--                <span v-if="user.startYear">{{ user.startYear }}级</span>-->
+                <!--                <span v-if="user.startYear">{{ user.startYear }}级</span>-->
                 <span>权限: {{ user.permission }}</span>
                 <span>部门: {{ user.organizationName }}</span>
               </div>
@@ -38,6 +38,7 @@
       </ul>
     </el-drawer>
   </div>
+  <div id="zhanwei"/>
 </template>
 
 <script setup lang="ts">
@@ -51,7 +52,7 @@ import {logoutApi} from "../../../../api";
 const title = ref('济南大学MSU');
 const menuTitle = ref("");
 const menuVisible = ref(false);
-const user=useUserStore();
+const user = useUserStore();
 // 使用 Vue Router
 const router = useRouter();
 
@@ -83,18 +84,22 @@ const logout = async () => {
 </script>
 
 <style scoped>
+#zhanwei{
+  height:30px;
+}
 .mobile-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 10px;
-  background-color: #ffffff;
+  background-color: #242f42;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  position: relative;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
+  border-radius: 3px;
 }
 
 .header-title {
@@ -102,6 +107,7 @@ const logout = async () => {
   font-size: 18px;
   white-space: nowrap;
   overflow: hidden;
+  color: white;
   text-overflow: ellipsis;
 }
 
@@ -129,12 +135,13 @@ const logout = async () => {
   transition: background-color 0.3s;
   //border-bottom: 1px solid #ccc; /* 添加底部横线 */
 }
+
 .menu-list li:hover {
   background-color: #f5f5f5;
   padding-bottom: 10px;
 }
 
-.user-info-name{
+.user-info-name {
   color: black;
   font-size: 20px;
 }
@@ -154,8 +161,9 @@ const logout = async () => {
   font-size: larger;
   right: 0;
 }
-#info span{
+
+#info span {
   font-size: 10px;
-  margin-right:5px;
+  margin-right: 5px;
 }
 </style>
