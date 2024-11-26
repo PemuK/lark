@@ -26,12 +26,13 @@
 </template>
 
 <script setup lang="ts" name="dashboard">
-import { ref, onMounted, defineExpose, defineProps, watch } from "vue";
-import { listWorkAmountByMonthApi } from "../api/work-amount";
+import {defineExpose, defineProps, onMounted, ref, watch} from "vue";
+import {listWorkAmountByMonthApi} from "../api/work-amount";
 
 // 定义 props
 const props = defineProps<{
   month: string;
+  update: boolean;
 }>();
 
 // 工作量列表
@@ -67,6 +68,11 @@ watch(
       getData(newValue);
     }
 );
+
+watch(() => props.update, (newVal) => {
+  getData();
+})
+
 
 // 页面加载时获取数据
 onMounted(() => {

@@ -59,20 +59,24 @@
 </template>
 
 <script setup lang="ts">
-import {defineEmits, onMounted, ref} from "vue";
+import {defineEmits, onMounted, ref, watch} from "vue";
 import {getMonthAmountApi} from "../../../../api/work-amount";
 import {formatDateToISO} from "../../../../utils/formatDateToIS0";
 
 const monAmount = ref();
 const type = ref(4);
 const emit = defineEmits(["month", "time"]);
-
+const props = defineProps(["update"]);
 // 控制 tooltip 可见性的变量
 const tooltipVisible = ref(false);
 
 onMounted(() => {
   getData();
 });
+
+watch(() => props.update, (newVal) => {
+  getData();
+})
 
 // 获取当前年份和月份
 const today = new Date();
@@ -108,7 +112,7 @@ const handleTouchEnd = (event) => {
       prevMonth();
     } else {
       // 左滑
-     nextMonth();
+      nextMonth();
     }
   }
 

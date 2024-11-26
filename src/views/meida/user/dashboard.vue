@@ -14,11 +14,11 @@
           </div>
         </template>
 
-        <MaintTable  style="width: 100%;" />
+        <MaintTable @update="updateInfo"/>
       </el-card>
 
       <el-card class="card work-amount">
-        <WorkAmount @month="monthAmountSearch" @time="updateTime"/>
+        <WorkAmount :update="updateFlag" @month="monthAmountSearch" @time="updateTime"/>
       </el-card>
 
       <el-card class="card statistics">
@@ -31,12 +31,12 @@
               >
           </div>
         </template>
-        <Statistics :month="month"/>
+        <Statistics :update="updateFlag" :month="month"/>
       </el-card>
 
     </div>
     <div v-else>
-        <AddMaint @change="addMaint"/>
+      <AddMaint @change="addMaint"/>
     </div>
   </Transition>
 </template>
@@ -60,6 +60,9 @@ const router = useRouter();
 //用户缓存
 const user = useUserStore();
 
+//触发更新事件
+const updateFlag = ref(false);
+
 //获取当前时间
 let nowTime = new Date();
 const month = ref(formatDateToISO(nowTime));
@@ -76,6 +79,9 @@ const updateTime = (msg: any) => {
 
 const addMaint = () => {
   change.value = !change.value;
+}
+const updateInfo = () => {
+  updateFlag.value = !updateFlag.value;
 }
 </script>
 
