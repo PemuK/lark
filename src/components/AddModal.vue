@@ -328,15 +328,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, reactive, onMounted, watch, defineEmits } from "vue";
-import { useSidebarStore } from "../stores/sidebar";
-import { useRoute, useRouter } from "vue-router";
+import { ref, reactive, onMounted, watch, defineEmits } from "vue";
+import { useRouter } from "vue-router";
 import { getBuildingListApi } from "../api/building";
 import { ElMessage } from "element-plus";
 
 import {
   addMaintRecordApi,
-  reportMaintApi,
   listMaintByClientNameApi,
   listMaintByLocationApi,
   listMaintByPhoneNumberApi,

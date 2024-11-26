@@ -1,43 +1,58 @@
 <template>
-  <div id="page">
+  <Transition name="run" appear>
+    <div id="page" v-if="!change">
+      <el-card class="card" style="margin-top: 20px;height: 230px; margin-bottom: 5px">
+        <template #header>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              未完成维护
+              <span style="font-size: 10px; margin-left: 5px; color: #888d8f;">
+              (点击每行查看维护详细)
+            </span>
+            </div>
+            <span style="cursor: pointer; color: #2c2c2c; font-size: small" @click="addMaint">添加</span>
+          </div>
+        </template>
 
-    <el-card class="card" style="margin-top: 20px;height: 230px; margin-bottom: 5px">
-      <template #header>未完成维护
-        <span style="font-size: 10px;margin-left: 5px; color: #888d8f">
-          (点击每行查看维护详细)
-        </span>
-      </template>
-      <MaintTable/>
-    </el-card>
+        <MaintTable/>
+      </el-card>
 
-    <el-card class="card work-amount">
-      <WorkAmount @month="monthAmountSearch" @time="updateTime"/>
-    </el-card>
+      <el-card class="card work-amount">
+        <WorkAmount @month="monthAmountSearch" @time="updateTime"/>
+      </el-card>
 
-    <el-card class="card statistics">
-      <template #header>
-        <div class="clearfix">
+      <el-card class="card statistics">
+        <template #header>
+          <div class="clearfix">
               <span
               >{{ nowTime.getFullYear() }}年{{
                   nowTime.getMonth() + 1
                 }}月工作量统计</span
               >
-        </div>
-      </template>
-      <Statistics :month="month"/>
-    </el-card>
+          </div>
+        </template>
+        <Statistics :month="month"/>
+      </el-card>
 
-  </div>
+    </div>
+    <div v-else>
+        <AddMaint @change="addMaint"/>
+    </div>
+  </Transition>
 </template>
 
 <script setup lang="ts">
 import Statistics from "../../../components/statistics.vue";
 import WorkAmount from "../components/statics/workAmount.vue";
 import MaintTable from "../components/statics/maintTable.vue";
+import AddMaint from "../components/action/addMaint.vue";
 import {useRouter} from 'vue-router';
 import {useUserStore} from "../../../stores/user";
-
+import {formatDateToISO} from "../../../utils/formatDateToIS0";
 import {ref} from "vue";
+
+//切换
+const change = ref(false);
 
 //路由
 const router = useRouter();
@@ -47,7 +62,7 @@ const user = useUserStore();
 
 //获取当前时间
 let nowTime = new Date();
-const month = ref();
+const month = ref(formatDateToISO(nowTime));
 
 //更新排名数据
 const monthAmountSearch = (msg: string) => {
@@ -57,6 +72,10 @@ const monthAmountSearch = (msg: string) => {
 
 const updateTime = (msg: any) => {
   nowTime = msg;
+}
+
+const addMaint = () => {
+  change.value = !change.value;
 }
 </script>
 
