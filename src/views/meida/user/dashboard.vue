@@ -7,7 +7,7 @@
           (点击每行查看维护详细)
         </span>
       </template>
-      <UnfinishMaint/>
+      <MaintTable/>
     </el-card>
 
     <el-card class="card work-amount">
@@ -33,7 +33,7 @@
 <script setup lang="ts">
 import Statistics from "../../../components/statistics.vue";
 import WorkAmount from "../components/statics/workAmount.vue";
-import UnfinishMaint from "../components/statics/unfinishMaint.vue";
+import MaintTable from "../components/statics/maintTable.vue";
 import {useRouter} from 'vue-router';
 import {useUserStore} from "../../../stores/user";
 
