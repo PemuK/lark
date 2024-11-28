@@ -1,18 +1,18 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
-import { usePermissStore } from '../stores/permiss';
-import { deviceDetection } from '../utils/device-detection';
-import { useUserStore } from '../stores/user';
+import {createRouter, createWebHashHistory, RouteRecordRaw} from 'vue-router';
+import {usePermissStore} from '../stores/permiss';
+import {deviceDetection} from '../utils/device-detection';
+import {useUserStore} from '../stores/user';
 
 const mediaRoutes: RouteRecordRaw[] = [
     {
         path: '/',
         redirect: '/dashboard',
-    }, 
+    },
     {
         path: '/',
         name: 'Home',
-        component: ()=>import('../views/meida/home.vue'),
-        children:[
+        component: () => import('../views/meida/home.vue'),
+        children: [
             {
                 path: '/dashboard',
                 name: 'dashboard',
@@ -21,6 +21,14 @@ const mediaRoutes: RouteRecordRaw[] = [
                     permiss: '1',
                 },
                 component: () => import(/* webpackChunkName: "dashboard" */ '../views/meida/user/dashboard.vue'),
+            }, {
+                path: '/search',
+                name: 'search',
+                meta: {
+                    title: '维护查询',
+                    permiss: '1',
+                },
+                component: () => import(/* webpackChunkName: "dashboard" */ '../views/meida/views/maintSearch.vue'),
             }
         ]
     },
@@ -42,7 +50,7 @@ const pcRoutes: RouteRecordRaw[] = [
     {
         path: '/',
         name: 'Home',
-        component: ()=>import('../views/pc/home.vue'),
+        component: () => import('../views/pc/home.vue'),
         children: [
             {
                 path: '/dashboard',
@@ -272,8 +280,6 @@ router.beforeEach((to: any, from: any, next: any) => {
     // Continue if all checks pass
     next();
 });
-
-
 
 
 export default router;

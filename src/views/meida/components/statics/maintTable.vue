@@ -171,13 +171,13 @@ import {useRouter} from 'vue-router';
 import {useUserStore} from "../../../../stores/user";
 import {listUserByStatusAndStateApi} from "../../../../api/user";
 import {getBuildingListApi} from "../../../../api/building";
-import {onMounted, reactive, ref,defineEmits} from "vue";
+import {defineEmits, onMounted, reactive, ref} from "vue";
 import {ElMessage} from "element-plus";
 
 //路由
 const router = useRouter();
 
-const emit=defineEmits(["update"])
+const emit = defineEmits(["update"])
 
 //用户缓存
 const user = useUserStore();
@@ -279,8 +279,8 @@ const saveReport = () => {
           ElMessage.success("填报成功");
           dialogClose();
           getData();
-          emit("update",true)
-          report.value.persons=[];
+          emit("update", true)
+          report.value.persons = [];
           report.value.maintType = null;
           report.value.note = null;
         }
@@ -377,7 +377,6 @@ const getData = () => {
 
 .report-footer {
   text-align: right; /* 使按钮居中 */
-  margin-top: 20px; /* 根据需要调整上边距 */
 }
 
 select {

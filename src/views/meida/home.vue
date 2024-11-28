@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <Header/>
-    <router-view v-slot="{ Component }">
+    <router-view class="zhanwei" v-slot="{ Component }">
       <transition name="move" mode="out-in">
         <keep-alive>
           <component :is="Component"></component>
@@ -22,5 +22,9 @@ import Header from './components/structure/Header.vue';
   flex-direction: column; /* 子元素垂直排列 */
   background-color: #f6f6f6; /* 设置背景色为灰色 */
   overflow-y: auto;
+}
+
+.zhanwei {
+  margin-top: 20px;
 }
 </style>

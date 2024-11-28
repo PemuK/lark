@@ -18,7 +18,7 @@
         class="handle-input mr10"
       ></el-input>
 
-      <!-- Multi-select input for 'participant' -->
+      <!   -- Multi-select input for 'participant' -->
       <el-select
         v-else
         v-model="searchType"

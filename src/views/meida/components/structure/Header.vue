@@ -3,7 +3,7 @@
     <div class="header-title">{{ title }}</div>
     <div class="header-menu" @click="toggleMenu">
       <el-icon :size="20" color="white">
-        <Menu/>
+        <Menu />
       </el-icon>
     </div>
     <!-- 右侧滑出的菜单 -->
@@ -20,7 +20,6 @@
               <div class="user-info-name">{{ user.name }}</div>
               <div id="info">
                 <span>账号: {{ user.username }}</span>
-                <!--                <span v-if="user.startYear">{{ user.startYear }}级</span>-->
                 <span>权限: {{ user.permission }}</span>
                 <span>部门: {{ user.organizationName }}</span>
               </div>
@@ -30,11 +29,14 @@
       </template>
 
       <ul class="menu-list">
-        <li @click="navigateTo('/dashboard')">首页</li>
-        <li @click="navigateTo('/about')">维护查询</li>
-        <li @click="navigateTo('/contact')">维护量统计</li>
+        <li class="break" @click="navigateTo('/dashboard')">首页</li>
+        <li  @click="navigateTo('/search')">维护查询</li>
+        <li class="break" @click="navigateTo('/contact')">添加维护</li>
+        <li @click="navigateTo('/contact')">用户管理</li>
+        <li class="break" @click="navigateTo('/contact')">维护员管理</li>
+        <li @click="navigateTo('/contact')">IP分配</li>
+        <li class="break" @click="navigateTo('/contact')">信息管理</li>
         <li @click="logout" class="logout-button">退出登录</li>
-
       </ul>
     </el-drawer>
   </div>
@@ -42,18 +44,17 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue';
-import {useRouter} from 'vue-router';
-import {ElDrawer, ElIcon, ElMessage} from 'element-plus';
-import {Menu} from '@element-plus/icons-vue';
-import {useUserStore} from "../../../../stores/user";
-import {logoutApi} from "../../../../api";
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { ElDrawer, ElIcon, ElMessage } from 'element-plus';
+import { Menu } from '@element-plus/icons-vue';
+import { useUserStore } from "../../../../stores/user";
+import { logoutApi } from "../../../../api";
+
 // 响应式变量
 const title = ref('济南大学MSU');
-const menuTitle = ref("");
 const menuVisible = ref(false);
 const user = useUserStore();
-// 使用 Vue Router
 const router = useRouter();
 
 // 切换菜单的显示状态
@@ -72,14 +73,19 @@ const navigateTo = (path: string) => {
   menuVisible.value = false; // 关闭菜单
 };
 
+// 退出登录
 const logout = async () => {
-  // 调用后端API进行退出登录操作
+  // 清理本地存储
   localStorage.removeItem("ms_username");
   router.push("/login");
   user.outLogin();
-  logoutApi().then((res) => {
+
+  try {
+    await logoutApi();
     ElMessage.success("登出成功");
-  });
+  } catch (error) {
+    ElMessage.error("登出失败，请稍后重试");
+  }
 };
 </script>
 
@@ -106,9 +112,9 @@ const logout = async () => {
 .header-title {
   margin: 0;
   font-size: 18px;
+  color: white;
   white-space: nowrap;
   overflow: hidden;
-  color: white;
   text-overflow: ellipsis;
 }
 
@@ -117,7 +123,7 @@ const logout = async () => {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: #333;
+  color: white;
 }
 
 .menu-list {
@@ -127,19 +133,22 @@ const logout = async () => {
 }
 
 .menu-list li {
-  //padding-bottom: 20px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  //height: 40px;
+  padding: 10px 15px;
   font-size: 14px;
   cursor: pointer;
   transition: background-color 0.3s;
-  //border-bottom: 1px solid #ccc; /* 添加底部横线 */
+}
+
+.menu-list li:last-child {
+  border-bottom: none; /* 移除最后一个元素的下边框 */
 }
 
 .menu-list li:hover {
   background-color: #f5f5f5;
-  padding-bottom: 10px;
+}
+
+.logout-button {
+  color: red; /* 样式化退出按钮 */
 }
 
 .user-info-name {
@@ -158,13 +167,17 @@ const logout = async () => {
 
 ::v-deep .el-drawer__close-btn {
   position: relative;
-  top: -10px;
+  top: -20px;
   font-size: larger;
-  right: 0;
+  right: -1px;
 }
 
 #info span {
-  font-size: 10px;
+  font-size: 12px;
   margin-right: 5px;
+}
+
+.break{
+  border-bottom: 1px solid #ddd; /* 添加底部横线 */
 }
 </style>

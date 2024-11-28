@@ -1,5 +1,5 @@
 <template>
-  <el-card class="card" style="margin-top: 20px">
+  <el-card class="card">
     <template #header>
       <div style="display: flex; justify-content: space-between; align-items: center;">
         <div>

@@ -6,7 +6,7 @@ import { AnyARecord } from "dns";
 
 const service: AxiosInstance = axios.create({
   // baseURL: "http://localhost:56000", // API 基础地址
-  baseURL: "http://192.168.1.105:56000", // API 基础地址
+  baseURL: "http://192.168.1.101:56000", // API 基础地址
   timeout: 5000, // 超时时间
   withCredentials: true, // 允许携带 cookie
 });
