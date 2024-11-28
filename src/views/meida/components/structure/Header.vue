@@ -1,9 +1,9 @@
 <template>
   <div class="mobile-header">
-    <div class="header-title">{{ title }}</div>
+    <div class="header-title" @click="toHome">{{ title }}</div>
     <div class="header-menu" @click="toggleMenu">
       <el-icon :size="20" color="white">
-        <Menu />
+        <Menu/>
       </el-icon>
     </div>
     <!-- 右侧滑出的菜单 -->
@@ -30,12 +30,13 @@
 
       <ul class="menu-list">
         <li class="break" @click="navigateTo('/dashboard')">首页</li>
-        <li  @click="navigateTo('/search')">维护查询</li>
-        <li class="break" @click="navigateTo('/contact')">添加维护</li>
-        <li @click="navigateTo('/contact')">用户管理</li>
-        <li class="break" @click="navigateTo('/contact')">维护员管理</li>
-        <li @click="navigateTo('/contact')">IP分配</li>
-        <li class="break" @click="navigateTo('/contact')">信息管理</li>
+        <li @click="navigateToAdd">添加维护</li>
+        <li @click="navigateTo('/search')">维护查询</li>
+        <li class="break" @click="navigateTo('/amount')">维护量查询</li>
+        <li @click="navigateTo('/user')">用户管理</li>
+        <li class="break" @click="navigateTo('/worker')">维护员管理</li>
+        <li @click="navigateTo('/ip')">IP分配</li>
+        <li class="break" @click="navigateTo('/info')">信息管理</li>
         <li @click="logout" class="logout-button">退出登录</li>
       </ul>
     </el-drawer>
@@ -44,12 +45,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { ElDrawer, ElIcon, ElMessage } from 'element-plus';
-import { Menu } from '@element-plus/icons-vue';
-import { useUserStore } from "../../../../stores/user";
-import { logoutApi } from "../../../../api";
+import {ref} from 'vue';
+import {useRouter} from 'vue-router';
+import {ElDrawer, ElIcon, ElMessage} from 'element-plus';
+import {Menu} from '@element-plus/icons-vue';
+import {useUserStore} from "../../../../stores/user";
+import {logoutApi} from "../../../../api";
 
 // 响应式变量
 const title = ref('济南大学MSU');
@@ -73,6 +74,11 @@ const navigateTo = (path: string) => {
   menuVisible.value = false; // 关闭菜单
 };
 
+const toHome = () => {
+  router.push("/dashboard");
+
+}
+
 // 退出登录
 const logout = async () => {
   // 清理本地存储
@@ -87,6 +93,11 @@ const logout = async () => {
     ElMessage.error("登出失败，请稍后重试");
   }
 };
+
+const navigateToAdd = () => {
+  router.push({name: "dashboard", query: {add: true}});
+  menuVisible.value = false; // 关闭菜单
+}
 </script>
 
 <style scoped>
@@ -177,7 +188,7 @@ const logout = async () => {
   margin-right: 5px;
 }
 
-.break{
+.break {
   border-bottom: 1px solid #ddd; /* 添加底部横线 */
 }
 </style>

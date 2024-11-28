@@ -27,4 +27,8 @@ import Header from './components/structure/Header.vue';
 .zhanwei {
   margin-top: 20px;
 }
+
+::v-deep :root{
+  --el-menu-active-color:#242f42;
+}
 </style>

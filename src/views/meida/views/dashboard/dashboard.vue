@@ -42,20 +42,31 @@
 </template>
 
 <script setup lang="ts">
-import Statistics from "../../../components/statistics.vue";
-import WorkAmount from "../components/statics/workAmount.vue";
-import MaintTable from "../components/statics/maintTable.vue";
-import AddMaint from "../components/action/addMaint.vue";
-import {useRouter} from 'vue-router';
-import {useUserStore} from "../../../stores/user";
-import {formatDateToISO} from "../../../utils/formatDateToIS0";
-import {ref} from "vue";
+import Statistics from "../../../../components/statistics.vue";
+import WorkAmount from "./components/workAmount.vue";
+import MaintTable from "./components/maintTable.vue";
+import AddMaint from "./components/addMaint.vue";
+import {useRoute, useRouter} from 'vue-router';
+import {useUserStore} from "../../../../stores/user";
+import {formatDateToISO} from "../../../../utils/formatDateToIS0";
+import {onMounted, ref, watch} from "vue";
+
+onMounted(() => {
+  if (route.query.add) {
+    change.value = route.query.add;
+  } else {
+    change.value = false;
+  }
+})
 
 //切换
 const change = ref(false);
 
 //路由
 const router = useRouter();
+
+//获取路由参数
+const route = useRoute();
 
 //用户缓存
 const user = useUserStore();
@@ -66,6 +77,20 @@ const updateFlag = ref(false);
 //获取当前时间
 let nowTime = new Date();
 const month = ref(formatDateToISO(nowTime));
+
+
+watch(
+    () => route.query.add,
+    (newValue, oldValue) => {
+      if (newValue == undefined) {
+        change.value = false;
+      }
+      if (newValue) {
+        change.value = newValue;
+      }
+
+    }
+);
 
 //更新排名数据
 const monthAmountSearch = (msg: string) => {

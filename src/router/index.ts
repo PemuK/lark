@@ -20,7 +20,7 @@ const mediaRoutes: RouteRecordRaw[] = [
                     title: '系统首页',
                     permiss: '1',
                 },
-                component: () => import(/* webpackChunkName: "dashboard" */ '../views/meida/user/dashboard.vue'),
+                component: () => import(/* webpackChunkName: "dashboard" */ '../views/meida/views/dashboard/dashboard.vue'),
             }, {
                 path: '/search',
                 name: 'search',
@@ -28,7 +28,7 @@ const mediaRoutes: RouteRecordRaw[] = [
                     title: '维护查询',
                     permiss: '1',
                 },
-                component: () => import(/* webpackChunkName: "dashboard" */ '../views/meida/views/maintSearch.vue'),
+                component: () => import(/* webpackChunkName: "dashboard" */ '../views/meida/views/maintSearch/maintSearch.vue'),
             }
         ]
     },

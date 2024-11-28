@@ -196,15 +196,15 @@
 
 <script setup lang="ts">
 import {defineEmits, onMounted, ref, watch} from "vue";
-import {getBuildingListApi} from "../../../../api/building";
+import {getBuildingListApi} from "../../../../../api/building";
 import {
   addMaintRecordApi,
   listMaintByClientNameApi,
   listMaintByLocationApi,
   listMaintByPhoneNumberApi
-} from "../../../../api/maint";
+} from "../../../../../api/maint";
 import {ElMessage} from "element-plus";
-import {useUserStore} from "../../../../stores/user";
+import {useUserStore} from "../../../../../stores/user";
 
 onMounted(() => {
   getData();

@@ -60,8 +60,8 @@
 
 <script setup lang="ts">
 import {defineEmits, onMounted, ref, watch} from "vue";
-import {getMonthAmountApi} from "../../../../api/work-amount";
-import {formatDateToISO} from "../../../../utils/formatDateToIS0";
+import {getMonthAmountApi} from "../../../../../api/work-amount";
+import {formatDateToISO} from "../../../../../utils/formatDateToIS0";
 
 const monAmount = ref();
 const type = ref(4);
