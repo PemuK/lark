@@ -29,6 +29,23 @@ const mediaRoutes: RouteRecordRaw[] = [
                     permiss: '1',
                 },
                 component: () => import(/* webpackChunkName: "dashboard" */ '../views/meida/views/maintSearch/maintSearch.vue'),
+            },{
+                path: '/user-info',
+                name: 'user-info',
+                meta: {
+                    title: '用户信息',
+                    permiss: '1',
+                },
+                component: () => import(/* webpackChunkName: "dashboard" */ '../views/meida/views/userInfo/userInfo.vue'),
+            },
+            {
+                path: '/other-info',
+                name: 'other-info',
+                meta: {
+                    title: '其他信息',
+                    permiss: '1',
+                },
+                component: () => import(/* webpackChunkName: "dashboard" */ '../views/meida/views/otherInfo/otherInfo.vue'),
             }
         ]
     },
