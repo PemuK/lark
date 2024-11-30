@@ -29,7 +29,7 @@ const mediaRoutes: RouteRecordRaw[] = [
                     permiss: '1',
                 },
                 component: () => import(/* webpackChunkName: "dashboard" */ '../views/meida/views/maintSearch/maintSearch.vue'),
-            },{
+            }, {
                 path: '/user-info',
                 name: 'user-info',
                 meta: {
@@ -46,6 +46,14 @@ const mediaRoutes: RouteRecordRaw[] = [
                     permiss: '1',
                 },
                 component: () => import(/* webpackChunkName: "dashboard" */ '../views/meida/views/otherInfo/otherInfo.vue'),
+            }, {
+                path: '/work-amount',
+                name: 'work-amount',
+                meta: {
+                    title: '维护量查询',
+                    permiss: '1',
+                },
+                component: () => import(/* webpackChunkName: "dashboard" */ '../views/meida/views/workAmountSearch/workAmountSearch.vue'),
             }
         ]
     },

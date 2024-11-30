@@ -32,7 +32,8 @@
         <li class="break" @click="navigateTo('/dashboard')">首页</li>
         <li @click="navigateToAdd">添加维护</li>
         <li @click="navigateTo('/search')">维护查询</li>
-        <li class="break" @click="navigateTo('/amount')">维护量查询</li>
+        <li class="break" @click="navigateTo('/work-amount')">维护量查询</li>
+        <li class="break" @click="navigateTo('/permission')">权限管理</li>
         <li @click="navigateTo('/user-info')">用户管理</li>
         <li class="break" @click="navigateTo('/worker')">维护员管理</li>
         <li @click="navigateTo('/ip')">IP分配</li>
