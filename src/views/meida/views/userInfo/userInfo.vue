@@ -55,11 +55,10 @@
 
     <el-table v-loading="tableLoading" :data="tableData" style="margin-top: 20px;" @row-click="onRowClick">
       <el-table-column label="姓名" prop="name" />
-      <el-table-column label="学院/部门" prop="organizationName" />
+      <el-table-column label="部门" prop="organizationName" />
       <el-table-column label="账号" prop="username" />
       <el-table-column label="权限" prop="permission" />
       <el-table-column label="联系电话" prop="phoneNumber" />
-      <el-table-column label="年级" prop="startYear" />
     </el-table>
 
     <div class="pagination-section">
