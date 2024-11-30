@@ -51,6 +51,7 @@ declare module 'vue' {
     ElTag: typeof import('element-plus/es')['ElTag']
     ElTimeline: typeof import('element-plus/es')['ElTimeline']
     ElTimelineItem: typeof import('element-plus/es')['ElTimelineItem']
+    ElTimeSelect: typeof import('element-plus/es')['ElTimeSelect']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     Header: typeof import('./src/components/Header.vue')['default']
     MaintType: typeof import('./src/components/MaintType.vue')['default']

@@ -20,4 +20,16 @@ function formatDate(dateString: string) {
     return new Date(dateString).toLocaleString("zh-CN", options);
 };
 
-export {formatDateToISO,formatDate};
+function transformDataToCascaderFormat(data: Record<string, Array<any>>) {
+    return Object.keys(data).map((year) => ({
+        value: year,
+        label: year,
+        children: data[year].map((item, index) => ({
+            value: `${item.id}`,
+            label: `${item.name}`,
+            // Add more properties from your data as needed
+        })),
+    }));
+}
+
+export {formatDateToISO,formatDate,transformDataToCascaderFormat};
