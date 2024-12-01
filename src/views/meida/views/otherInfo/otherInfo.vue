@@ -50,7 +50,7 @@ import DNSTable from "./components/DNSTable.vue";
 import BuildingTable from "./components/BuildingTable.vue";
 import ActionDialog from "./components/ActionDialog.vue";
 
-const option = ref<string | null>();
+const option = ref<string | null>("1");
 const organization = ref();
 const maintType = ref();
 const building = ref();

@@ -46,7 +46,8 @@ const mediaRoutes: RouteRecordRaw[] = [
                     permiss: '1',
                 },
                 component: () => import(/* webpackChunkName: "dashboard" */ '../views/meida/views/otherInfo/otherInfo.vue'),
-            }, {
+            },
+            {
                 path: '/work-amount',
                 name: 'work-amount',
                 meta: {
@@ -54,6 +55,15 @@ const mediaRoutes: RouteRecordRaw[] = [
                     permiss: '1',
                 },
                 component: () => import(/* webpackChunkName: "dashboard" */ '../views/meida/views/workAmountSearch/workAmountSearch.vue'),
+            },
+            {
+                path: '/ip-allocation',
+                name: 'ip-allocation',
+                meta: {
+                    title: 'ip分配',
+                    permiss: '1',
+                },
+                component: () => import(/* webpackChunkName: "dashboard" */ '../views/meida/views/IpAllocation/IpAllocation.vue'),
             }
         ]
     },

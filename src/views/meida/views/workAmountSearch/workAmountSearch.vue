@@ -81,11 +81,11 @@
       <el-table-column label="维护量" prop="workAmount"/>
     </el-table>
   </el-card>
-  <el-card class="card" style="margin-top: 5px; height: 400px; overflow-y: auto" @scroll="handleScroll">
+  <el-card class="card" style="margin-top: 5px; height: 350px; overflow-y: auto" @scroll="handleScroll">
     <el-timeline class="expandable-timeline">
 
       <el-timeline-item
-          v-for="(item, index) in timelineData"
+          v-for="(item, index) in timelineData.data"
           :key="index"
           :timestamp="item.finishTime"
           placement="top"
@@ -123,7 +123,7 @@ import {
   listWorkAmountByUserIdsApi
 } from "../../../../api/work-amount";
 import {formatDate, formatDateToISO, transformDataToCascaderFormat} from "../../../../utils/formatDateToIS0";
-import {getFinishWhListApi} from "../../../../api/maint";
+import {getFinishWhListApi, pageMaintByUserIdsAndTimeApi, pageMaintsByUserIdApi} from "../../../../api/maint";
 
 const option = ref<string | null>("1");
 const grades = ref();
@@ -134,7 +134,11 @@ const searchTime = ref({
   endTime: ""
 });
 const tableData = ref();
-const timelineData = ref<any[]>([]);
+const timelineData = ref({
+  data: [],
+  userId: 0,
+  isDefault: true
+});
 const optionLabels: Record<string, string> = {
   "1": "年级",
   "2": "时间段",
@@ -200,7 +204,7 @@ const initTimeLineData = () => {
       if (res.data.data.list.length < page.value.pageSize) {
         noMoreData.value = true
       }
-      timelineData.value = [...timelineData.value, ...data];
+      timelineData.value.data = [...timelineData.value.data, ...data];
       page.value.totalItems = res.data.data.total;
       localStorage.setItem(String(page.value.currentPage), JSON.stringify(tableData.value));
     }
@@ -208,6 +212,52 @@ const initTimeLineData = () => {
     tableLoading.value = false;
     loading.value = false; // 加载完成
   })
+}
+
+const timeLineByUserId = (userId: any) => {
+  if (noMoreData.value) return;
+
+  if (option.value == "1" || option.value == "3") {
+    pageMaintsByUserIdApi(timelineData.value.userId, page.value.pageNum, page.value.pageSize, 1).then((res) => {
+      if (res.data.code == 200) {
+        const data = res.data.data.list.map((item: any) => ({
+          ...item,
+          createTime: formatDate(item.createTime),
+          updateTime: formatDate(item.updateTime),
+          finishTime: formatDate(item.finishTime),
+        }));
+        if (res.data.data.list.length < page.value.pageSize) {
+          noMoreData.value = true
+        }
+        timelineData.value.data = [...timelineData.value.data, ...data];
+        page.value.totalItems = res.data.data.total;
+        localStorage.setItem(String(page.value.currentPage), JSON.stringify(tableData.value));
+      }
+      page.value.pageNum++;
+      tableLoading.value = false;
+      loading.value = false; // 加载完成
+    })
+  } else if (option.value == "2") {
+    pageMaintByUserIdsAndTimeApi(page.value.pageNum, page.value.pageSize, formatDateToISO(searchTime.value.startTime), formatDateToISO(searchTime.value.endTime), timelineData.value.userId, 1).then((res) => {
+      if (res.data.code == 200) {
+        const data = res.data.data.list.map((item: any) => ({
+          ...item,
+          createTime: formatDate(item.createTime),
+          updateTime: formatDate(item.updateTime),
+          finishTime: formatDate(item.finishTime),
+        }));
+        if (res.data.data.list.length < page.value.pageSize) {
+          noMoreData.value = true
+        }
+        timelineData.value.data = [...timelineData.value.data, ...data];
+        page.value.totalItems = res.data.data.total;
+        localStorage.setItem(String(page.value.currentPage), JSON.stringify(tableData.value));
+      }
+      page.value.pageNum++;
+      tableLoading.value = false;
+      loading.value = false; // 加载完成
+    })
+  }
 }
 
 const onSearch = () => {
@@ -235,14 +285,28 @@ const onReset = () => {
   searchTime.value.startTime = "";
   searchTime.value.endTime = "";
   searchInput.value = "";
+  noMoreData.value=false;
   getData();
+}
+
+const onRowClick = (row: any) => {
+  page.value.pageNum = 1;
+  page.value.total = 0;
+  timelineData.value.data = [];
+  console.log("row-click");
+  timelineData.value.isDefault = false;
+  timelineData.value.userId = row.userId;
+  timeLineByUserId();
 }
 
 const handleScroll = (event: Event) => {
   const target = event.target as HTMLElement;
   if (target.scrollTop + target.clientHeight >= target.scrollHeight - 5) {
-
-    initTimeLineData(); // 滑到底部，加载更多数据
+    if (timelineData.value.isDefault) {
+      initTimeLineData(); // 滑到底部，加载更多数据
+    } else {
+      timeLineByUserId();
+    }
   }
 };
 
