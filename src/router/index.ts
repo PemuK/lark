@@ -64,6 +64,15 @@ const mediaRoutes: RouteRecordRaw[] = [
                     permiss: '1',
                 },
                 component: () => import(/* webpackChunkName: "dashboard" */ '../views/meida/views/IpAllocation/IpAllocation.vue'),
+            },
+            {
+                path: '/permission',
+                name: 'permission',
+                meta: {
+                    title: '权限管理',
+                    permiss: '1',
+                },
+                component: () => import(/* webpackChunkName: "dashboard" */ '../views/meida/views/permission/permission.vue'),
             }
         ]
     },

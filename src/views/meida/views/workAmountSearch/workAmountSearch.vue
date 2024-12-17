@@ -162,8 +162,6 @@ const optionLabel = computed(() => option.value ? optionLabels[option.value] : n
 
 const handleCommand = (value: string) => {
   option.value = value;
-  // searchInput.value = "";
-  // queryMaint();
 };
 
 const tableLoading = ref(false);
@@ -285,13 +283,21 @@ const onReset = () => {
   searchTime.value.startTime = "";
   searchTime.value.endTime = "";
   searchInput.value = "";
-  noMoreData.value=false;
+  noMoreData.value = false;
+  page.value.pageNum = 1;
+  page.value.total = 0;
+  noMoreData.value = false;
+  loading.value = false;
   getData();
+  timelineData.value.data = [];
+  initTimeLineData();
 }
 
 const onRowClick = (row: any) => {
   page.value.pageNum = 1;
   page.value.total = 0;
+  noMoreData.value = false;
+  loading.value = false;
   timelineData.value.data = [];
   console.log("row-click");
   timelineData.value.isDefault = false;
