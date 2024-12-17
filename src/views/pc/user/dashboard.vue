@@ -284,7 +284,6 @@ import AddModal from "../../../components/AddModal.vue";
 import { ref } from "vue";
 import { ElMessage } from "element-plus";
 
-import { listWorkAmountByMonthApi } from "../../../api/work-amount";
 import { listUserByStatusAndStateApi } from "../../../api/user";
 import { getBuildingListApi } from "../../../api/building";
 import {
