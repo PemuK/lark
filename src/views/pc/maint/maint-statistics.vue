@@ -261,7 +261,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted, onBeforeMount, onUpdated, onUnmounted } from "vue";
+import { ref, computed, onMounted, onUpdated, onUnmounted } from "vue";
 
 import {
   getWorkAmountByStartYearApi,
