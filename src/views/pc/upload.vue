@@ -42,7 +42,7 @@ const handle = (rawFile: any) => {
     font-size: 22px;
     color: #1f2f3d;
 }
-.upload-demo {
-    width: 360px;
-}
+//.upload-demo {
+//    width: 360px;
+//}
 </style>
