@@ -282,8 +282,6 @@ import { reactive, onMounted } from "vue";
 import { usePermissStore } from "../../../stores/permiss";
 import AddModal from "../../../components/AddModal.vue";
 import { ref } from "vue";
-import * as echarts from "echarts";
-import imgurl from "../assets/img/img.jpg";
 import { ElMessage } from "element-plus";
 
 import { listWorkAmountByMonthApi } from "../../../api/work-amount";
